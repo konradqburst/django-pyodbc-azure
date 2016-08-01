@@ -7,7 +7,10 @@ django-pyodbc-azure
 .. image:: http://img.shields.io/pypi/l/django-pyodbc-azure.svg?style=flat
     :target: http://opensource.org/licenses/BSD-3-Clause
 
-*django-pyodbc-azure* is a refined fork of
+*django-pyodbc-azure* is a fork of
+`django-pyodbc-azure <https://github.com/michiya/django-pyodbc-azure>`__
+with some cherry-picked commits from the 1.2 branch to support Django 1.6 with FreeTDS in 0.95 version.
+`django-pyodbc-azure <https://github.com/michiya/django-pyodbc-azure>`__ is a refined fork of
 `django-pyodbc <https://github.com/avidal/django-pyodbc>`__, a
 `Django <http://djangoproject.com/>`__ Microsoft SQL Server external
 DB backend that uses ODBC by employing the

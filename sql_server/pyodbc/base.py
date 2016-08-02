@@ -318,24 +318,30 @@ class DatabaseWrapper(BaseDatabaseWrapper):
             self.connection = None
 
     def _savepoint(self, sid):
-        with self.cursor() as cursor:
+        cursor = self.cursor()
+        try:
             cursor.execute('SELECT @@TRANCOUNT')
             trancount = cursor.fetchone()[0]
             if trancount == 0:
                 cursor.execute(self.ops.start_transaction_sql())
             cursor.execute(self.ops.savepoint_create_sql(sid))
+        finally:
+            cursor.close()
 
     def _savepoint_commit(self, sid):
         # SQL Server has no support for partial commit in a transaction
         pass
 
     def _savepoint_rollback(self, sid):
-        with self.cursor() as cursor:
+        cursor = self.cursor()
+        try:
             # FreeTDS v0.95 requires TRANCOUNT that is greater than 0
             cursor.execute('SELECT @@TRANCOUNT')
             trancount = cursor.fetchone()[0]
             if trancount > 0:
                 cursor.execute(self.ops.savepoint_rollback_sql(sid))
+        finally:
+           cursor.close() 
 
     def _set_autocommit(self, autocommit):
         with self.wrap_database_errors:
